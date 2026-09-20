@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Kerja MPK | SMAN 1 Batujaya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Palette Pastel Sesuai Gambar */
+            --sky-blue: #C8E7FF;
+            --baby-blue: #B7E3FF;
+            --pastel-pink: #FFD6E8;
+            --butter-yellow: #FFF3C4;
+            --mint-green: #D6F5C8;
+            
+            /* Warna Pendukung UI */
+            --blue-dark: #1E3A8A;
+            --blue-text: #0F172A;
+            --bg-main: #F0F7FF;
+            --white: #FFFFFF;
+            --shadow: 0 12px 30px rgba(183, 227, 255, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--blue-text);
+            padding: 20px 12px;
+            min-height: 100vh;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header Style Minimalis & Modern */
+        header {
+            background: linear-gradient(135deg, var(--baby-blue), var(--sky-blue));
+            border-radius: 28px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border: 2px solid #FFFFFF;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            background: var(--pastel-pink);
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(20px);
+        }
+
+        .tag-hero {
+            display: inline-block;
+            background: var(--white);
+            color: var(--blue-dark);
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        header h1 {
+            color: var(--blue-dark);
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #334155;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* Section & Cards */
+        .section-label {
+            font-weight: 800;
+            color: var(--blue-dark);
+            font-size: 1.1rem;
+            margin: 25px 0 15px 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .proker-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 2px solid #EBF4FF;
+            transition: all 0.3s ease;
+        }
+
+        .proker-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Header Card Beda Warna Tiap Proker */
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed #E2E8F0;
+        }
+
+        .badge-code {
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: var(--blue-dark);
+        }
+
+        /* Akses Warna Accent Sesuai Gambar */
+        .bg-pink { background-color: var(--pastel-pink); }
+        .bg-yellow { background-color: var(--butter-yellow); }
+        .bg-green { background-color: var(--mint-green); }
+        .bg-sky { background-color: var(--sky-blue); }
+
+        .proker-card h2 {
+            font-size: 1.35rem;
+            color: var(--blue-dark);
+            font-weight: 800;
+        }
+
+        .proker-card p {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 15px;
+        }
+
+        /* Highlight Grid dalam Card */
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .highlight-item {
+            background: #F8FAFC;
+            padding: 12px 15px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--blue-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #E2E8F0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px 10px;
+            color: #64748B;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Floating Audio Button */
+        #music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--sky-blue);
+            color: var(--blue-dark);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            font-size: 1.2rem;
+            border: 2px solid var(--white);
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="myAudio" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-btn" onclick="toggleMusic()">🎵</div>
+
+    <div class="wrapper">
+        <header>
+            <span class="tag-hero">Program Kerja Unggulan</span>
+            <h1>MPK SMAN 1 Batujaya</h1>
+            <p>Ruang Gagasan, Inovasi, dan Apresiasi Pengurus 2026</p>
+        </header>
+
+        <div class="section-label">📌 Rincian Program Kerja</div>
+
+        <!-- PROKER 1: KANIRA -->
+        <div class="proker-card">
+            <div class="card-header">
+                <h2>KANIRA</h2>
+                <span class="badge-code bg-pink">MPK Berani Berbicara</span>
+            </div>
+            <p>Forum khusus pengembangan kemampuan internal anggota MPK dalam berbicara, berdiskusi, dan menyampaikan pendapat secara jelas serta percaya diri dalam menjalankan tugasnya.</p>
+            <div class="highlight-grid">
+                <div class="highlight-item">🗣️ Public Speaking</div>
+                <div class="highlight-item">⚖️ Latihan Debat</div>
+                <div class="highlight-item">🧠 Berpikir Kritis</div>
+                <div class="highlight-item">💬 Simulasi Aspirasi</div>
+            </div>
+        </div>
+
+        <!-- PROKER 2: NARASI -->
+        <div class="proker-card">
+            <div class="card-header">
+                <h2>NARASI</h2>
+                <span class="badge-code bg-yellow">Antar Organisasi</span>
+            </div>
+            <p>Kegiatan pertukaran wawasan antara MPK SMAN 1 Batujaya dengan MPK dari sekolah lain melalui diskusi interaktif dan berbagi pengalaman mengenai pelaksanaan organisasi.</p>
+            <div class="highlight-grid">
+                <div class="highlight-item">🤝 Studi Banding</div>
+                <div class="highlight-item">🔄 Tukar Sistem Kerja</div>
+                <div class="highlight-item">💡 Inovasi Program</div>
+                <div class="highlight-item">🌐 Nambah Relasi</div>
+            </div>
+        </div>
+
+        <!-- PROKER 3: APK -->
+        <div class="proker-card">
+            <div class="card-header">
+                <h2>APK</h2>
+                <span class="badge-code bg-green">Apresiasi Anggota MPK</span>
+            </div>
+            <p>Bentuk penghargaan kepada anggota MPK yang aktif mengikuti perkumpulan dan berkontribusi nyata dalam setiap kegiatan organisasi selama masa kepengurusan.</p>
+            <div class="highlight-grid">
+                <div class="highlight-item">📌 Mading Keaktifan</div>
+                <div class="highlight-item">⭐ Stiker Bintang</div>
+                <div class="highlight-item">📜 Piagam Tiap Semester</div>
+            </div>
+        </div>
+
+        <footer>
+            © 2026 MPK SMAN 1 Batujaya · Dilengkapi Kasih & Semangat
+        </footer>
+    </div>
+
+    <script>
+        function toggleMusic() {
+            var audio = document.getElementById("myAudio");
+            var btn = document.getElementById("music-btn");
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = "⏸️";
+            } else {
+                audio.pause();
+                btn.innerHTML = "🎵";
+            }
+        }
+    </script>
+</body>
+</html>
