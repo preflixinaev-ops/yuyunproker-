@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b7e3ff">
+<title>Program Kerja MPK | SMAN 1 Batujaya</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#c8e7ff;--baby:#b7e3ff;--pink:#ffd6e8;--yellow:#fff3c4;--mint:#d6f5c8;
+  --lav:#e7ddff;--blue:#1e3a8a;--ink:#0f172a;--muted:#64748b;--bg:#f5f9ff;
+  --white:#fff;--line:#e5edf7;--shadow:0 16px 45px rgba(82,126,170,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Plus Jakarta Sans",sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);min-height:100vh;padding:16px 12px}
+button,a{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.app{max-width:900px;margin:auto}
+.topbar{position:sticky;top:10px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.9);border-radius:18px;box-shadow:0 8px 30px rgba(50,80,120,.08);margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;color:var(--blue);font-size:12px}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--baby),var(--pink));display:grid;place-items:center}
+.navlinks{display:flex;gap:5px;overflow:auto}
+.navlinks button{border:0;background:transparent;padding:8px 10px;border-radius:10px;color:var(--muted);font-size:10px;font-weight:800;white-space:nowrap}
+.navlinks button:hover,.navlinks button.active{background:#edf5ff;color:var(--blue)}
+
+.view{display:none}.view.active{display:block;animation:pageIn .35s ease}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.hero{position:relative;overflow:hidden;border-radius:30px;padding:48px 30px;background:linear-gradient(135deg,var(--baby),var(--sky));box-shadow:var(--shadow);border:2px solid #fff}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.55}
+.hero:before{width:180px;height:180px;right:-55px;top:-70px;background:var(--pink)}
+.hero:after{width:150px;height:150px;left:-70px;bottom:-75px;background:var(--yellow)}
+.hero-content{position:relative;z-index:1;max-width:690px}
+.eyebrow{display:inline-flex;padding:7px 12px;border-radius:999px;background:#fff;color:var(--blue);font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:15px}
+.hero h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.05;color:var(--blue);letter-spacing:-1.5px;margin-bottom:12px}
+.hero p{font-size:13px;line-height:1.7;color:#334155;max-width:620px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+.btn{border:0;border-radius:13px;padding:12px 15px;font-size:10.5px;font-weight:800}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 8px 18px rgba(30,58,138,.18)}
+.btn-soft{background:#fff;color:var(--blue);border:1px solid rgba(30,58,138,.08)}
+
+.section-title{margin:27px 4px 12px}
+.kicker{font-size:9px;color:var(--blue);font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px}
+.section-title h2{font-size:20px;letter-spacing:-.5px}.section-title p{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.proker-card{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 7px 25px rgba(50,80,120,.06);transition:.25s}
+.proker-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.proker-card .blob{position:absolute;width:105px;height:105px;border-radius:50%;right:-45px;top:-48px;opacity:.75}
+.pink .blob{background:var(--pink)}.yellow .blob{background:var(--yellow)}.green .blob{background:var(--mint)}.lav .blob{background:var(--lav)}
+.card-top{position:relative;z-index:1;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.icon{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;font-size:20px}
+.pink .icon{background:var(--pink)}.yellow .icon{background:var(--yellow)}.green .icon{background:var(--mint)}.lav .icon{background:var(--lav)}
+.code{font-size:9px;font-weight:800;color:var(--blue);background:#f3f7fc;border-radius:999px;padding:6px 9px}
+.proker-card h3{font-size:17px;color:var(--blue);margin-top:14px}.subtitle{font-size:9.5px;font-weight:800;color:#64748b;margin:3px 0 9px}
+.proker-card p{font-size:10.5px;line-height:1.65;color:#475569}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.tag{font-size:8.5px;font-weight:800;padding:6px 8px;border-radius:9px;background:#f8fafc;border:1px solid var(--line);color:#475569}
+.card-link{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:9.5px;font-weight:800;margin-top:4px}
+
+.info{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 7px 25px rgba(50,80,120,.05)}
+.info p{font-size:11px;line-height:1.75;color:#475569}.info strong{color:var(--blue)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.mini{padding:16px;border-radius:17px;background:#f8fbff;border:1px solid var(--line)}
+.mini h3{font-size:12px;color:var(--blue);margin-bottom:6px}.mini p{font-size:10px;line-height:1.6;color:var(--muted)}
+.list{display:grid;gap:8px;margin-top:10px}.list li{list-style:none;font-size:10.5px;line-height:1.5;color:#475569;padding-left:18px;position:relative}.list li:before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
+
+.detail-hero{position:relative;overflow:hidden;border-radius:28px;padding:28px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.detail-hero .accent{position:absolute;width:170px;height:170px;border-radius:50%;right:-65px;top:-80px}
+.detail-hero.pink .accent{background:var(--pink)}.detail-hero.yellow .accent{background:var(--yellow)}.detail-hero.green .accent{background:var(--mint)}.detail-hero.lav .accent{background:var(--lav)}
+.back{border:0;background:#f4f7fb;color:var(--blue);border-radius:10px;padding:8px 10px;font-size:9px;font-weight:800;margin-bottom:20px}
+.detail-content{position:relative;z-index:1}.detail-icon{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:25px;margin-bottom:13px}
+.detail-hero.pink .detail-icon{background:var(--pink)}.detail-hero.yellow .detail-icon{background:var(--yellow)}.detail-hero.green .detail-icon{background:var(--mint)}.detail-hero.lav .detail-icon{background:var(--lav)}
+.detail-content h1{font-size:30px;color:var(--blue);letter-spacing:-1px}.detail-content .lead{font-size:11px;line-height:1.7;color:#475569;max-width:690px;margin-top:7px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}.badge{font-size:8.5px;font-weight:800;padding:7px 9px;border-radius:9px;background:#f8fafc;color:#475569;border:1px solid var(--line)}
+
+.detail-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:13px;margin-top:13px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:19px}.panel h2{font-size:14px;color:var(--blue);margin-bottom:9px}.panel h3{font-size:11px;color:var(--blue);margin:15px 0 7px}.panel p{font-size:10.5px;line-height:1.7;color:#475569}
+.goal-list{display:grid;gap:8px}.goal{display:flex;gap:9px;align-items:flex-start;padding:10px;border-radius:12px;background:#f8fbff}.goal b{font-size:10px;color:var(--blue)}.goal span{font-size:9.5px;line-height:1.45;color:var(--muted);display:block;margin-top:2px}
+.number-list{display:grid;gap:9px}.number-item{display:flex;gap:9px}.number{width:24px;height:24px;border-radius:8px;background:#edf5ff;color:var(--blue);display:grid;place-items:center;font-size:9px;font-weight:800;flex:none}.number-item div:last-child{font-size:10px;line-height:1.55;color:#475569}.number-item strong{display:block;color:var(--ink);font-size:10.5px}
+.timeline{display:grid;gap:8px}.timeline-item{display:flex;gap:10px;padding:10px;border-radius:12px;background:#f8fafc}.timeline-item b{font-size:10px;color:var(--blue);min-width:72px}.timeline-item span{font-size:9.5px;color:#64748b;line-height:1.45}
+.cta{margin-top:13px;border-radius:20px;padding:20px;background:linear-gradient(135deg,#1e3a8a,#4d70c8);color:#fff}.cta h2{font-size:16px;margin-bottom:5px}.cta p{font-size:10px;line-height:1.6;color:#dbeafe;margin-bottom:12px}.cta .btn{background:#fff;color:var(--blue)}
+
+.ronawicara-box{background:linear-gradient(135deg,#edf8ff,#fff6fb);border:1px solid #dcecf9;border-radius:18px;padding:15px}.ronawicara-box h3{font-size:12px;color:var(--blue);margin-bottom:5px}.ronawicara-box p{font-size:9.5px;line-height:1.6;color:#64748b}
+
+footer{padding:30px 10px 20px;text-align:center;color:#94a3b8;font-size:9px;line-height:1.6}
+
+@media(max-width:680px){
+  .grid,.two,.detail-grid{grid-template-columns:1fr}
+  .hero{padding:35px 22px}.hero h1{font-size:2.15rem}
+  .detail-content h1{font-size:26px}
+}
+@media(max-width:430px){
+  body{padding:9px}.topbar{top:6px}.navlinks button{padding:8px 8px}
+  .grid{gap:10px}.proker-card{padding:17px}.panel{padding:16px}
+}
+
+.vision-box{display:grid;grid-template-columns:1fr 1.25fr;gap:13px;margin-top:13px}
+.vision-card,.mission-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:21px;box-shadow:0 7px 25px rgba(50,80,120,.06)}
+.vision-card{background:linear-gradient(135deg,#edf8ff,#fff6fb)}
+.vm-label{display:inline-flex;padding:6px 9px;border-radius:999px;background:#edf5ff;color:var(--blue);font-size:8px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.vision-card h2,.mission-card h2{font-size:16px;color:var(--blue);margin-bottom:8px}
+.vision-card p{font-size:10.5px;line-height:1.75;color:#475569}
+.mission-list{margin:0;padding-left:22px}
+.mission-list li{font-size:10px;line-height:1.65;color:#475569;padding:6px 0}
+.mission-list li::marker{color:var(--blue);font-weight:800}
+.vm-note{margin-top:13px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px;font-size:10px;line-height:1.65;color:#475569}
+.vm-note b{color:var(--blue)}
+@media(max-width:680px){.vision-box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<audio id="bgMusic" src="musik.mp3" loop preload="auto"></audio>
+<div class="app">
+
+<header class="topbar">
+  <button class="brand" onclick="showView('home')"><span class="brand-mark">✦</span> MPK SMAN 1 BATUJAYA</button>
+  <nav class="navlinks">
+    <button data-view="home" class="active" onclick="showView('home')">Beranda</button>
+    <button data-view="visi" onclick="showView('visi')">Visi Misi</button>
+    <button data-view="kanira" onclick="showView('kanira')">KANIRA</button>
+    <button data-view="narasi" onclick="showView('narasi')">NARASI</button>
+    <button data-view="apk" onclick="showView('apk')">APREKA</button>
+    <button data-view="ronawicara" onclick="showView('ronawicara')">RONAWICARA</button>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="view active">
+  <div class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">Program Kerja Unggulan · 2026</span>
+      <h1>Ruang Gagasan,<br>Suara & Apresiasi.</h1>
+      <p>Portal informasi program kerja MPK SMAN 1 Batujaya. Kenali setiap program, pahami tujuannya, dan lihat bagaimana setiap gagasan dirancang untuk mendukung kerja organisasi.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="scrollToId('program')">Jelajahi Proker →</button>
+        <button class="btn btn-soft" onclick="showView('visi')">Lihat Visi & Misi</button>
+        <button class="btn btn-soft" onclick="showView('ronawicara')">Sampaikan Aspirasi</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" id="program">
+    <div class="kicker">Empat Program Kerja</div>
+    <h2>Kenali setiap proker.</h2>
+    <p>Pilih salah satu untuk membuka halaman penjelasan lengkap.</p>
+  </div>
+
+  <div class="grid">
+    <article class="proker-card pink" onclick="showView('kanira')">
+      <span class="blob"></span>
+      <div class="card-top"><div class="icon">🗣️</div><span class="code">01</span></div>
+      <h3>KANIRA</h3><div class="subtitle">MPK Berani Berbicara</div>
+      <p>Forum pengembangan kemampuan anggota MPK dalam berbicara, berdiskusi, berpikir kritis, dan menyampaikan aspirasi dengan percaya diri.</p>
+      <div class="tags"><span class="tag">Public Speaking</span><span class="tag">Debat</span><span class="tag">Aspirasi</span></div>
+      <span class="card-link">Lihat halaman KANIRA →</span>
+    </article>
+
+    <article class="proker-card yellow" onclick="showView('narasi')">
+      <span class="blob"></span>
+      <div class="card-top"><div class="icon">📖</div><span class="code">02</span></div>
+      <h3>NARASI</h3><div class="subtitle">Antar Organisasi</div>
+      <p>Ruang pertukaran wawasan antara MPK SMAN 1 Batujaya dengan MPK sekolah lain melalui diskusi dan berbagi pengalaman organisasi.</p>
+      <div class="tags"><span class="tag">Sharing</span><span class="tag">Studi Banding</span><span class="tag">Relasi</span></div>
+      <span class="card-link">Lihat halaman NARASI →</span>
+    </article>
+
+    <article class="proker-card green" onclick="showView('apk')">
+      <span class="blob"></span>
+      <div class="card-top"><div class="icon">⭐</div><span class="code">03</span></div>
+      <h3>APREKA</h3><div class="subtitle">Apresiasi Anggota MPK</div>
+      <p>Program penghargaan bagi anggota MPK yang aktif mengikuti kumpulan dan berkontribusi dalam kegiatan organisasi.</p>
+      <div class="tags"><span class="tag">Keaktifan</span><span class="tag">Bintang</span><span class="tag">Piagam</span></div>
+      <span class="card-link">Lihat halaman APREKA →</span>
+    </article>
+
+    <article class="proker-card lav" onclick="showView('ronawicara')">
+      <span class="blob"></span>
+      <div class="card-top"><div class="icon">💬</div><span class="code">04</span></div>
+      <h3>RONAWICARA</h3><div class="subtitle">Ruang Aspirasi Siswa</div>
+      <p>Wadah penyampaian kritik, saran, dan aspirasi siswa melalui mading sekolah maupun media online.</p>
+      <div class="tags"><span class="tag">Mading</span><span class="tag">Online</span><span class="tag">Tindak Lanjut</span></div>
+      <span class="card-link">Lihat halaman RONAWICARA →</span>
+    </article>
+  </div>
+
+  <div class="section-title">
+    <div class="kicker">Gambaran Besar</div><h2>Empat fungsi yang saling melengkapi.</h2>
+  </div>
+  <div class="two">
+    <div class="mini"><h3>🗣️ Pengembangan Anggota</h3><p>KANIRA membantu membangun keberanian berbicara, berdiskusi, dan menyampaikan gagasan.</p></div>
+    <div class="mini"><h3>🤝 Pengembangan Organisasi</h3><p>NARASI membuka ruang belajar dari pengalaman dan sistem kerja organisasi lain.</p></div>
+    <div class="mini"><h3>⭐ Apresiasi Internal</h3><p>APREKA memberi ruang penghargaan terhadap keaktifan dan kontribusi anggota MPK.</p></div>
+    <div class="mini"><h3>💬 Penyaluran Aspirasi</h3><p>RONAWICARA menyediakan jalur penyampaian aspirasi siswa secara langsung maupun online.</p></div>
+  </div>
+</section>
+
+
+<!-- VISI & MISI -->
+<section id="visi" class="view">
+  <div class="detail-hero blue">
+    <span class="accent"></span>
+    <div class="detail-content">
+      <button class="back" onclick="showView('home')">← Kembali ke Beranda</button>
+      <div class="detail-icon">🎯</div>
+      <h1>VISI & MISI</h1>
+      <p class="lead">Landasan MPK SMAN 1 Batujaya dalam menjalankan fungsi perwakilan siswa, pengawasan terhadap OSIS, komunikasi, dan pengelolaan aspirasi.</p>
+      <div class="badges"><span class="badge">Aspirasi</span><span class="badge">Pengawasan</span><span class="badge">Komunikasi</span><span class="badge">Organisasi</span></div>
+    </div>
+  </div>
+
+  <div class="vision-box">
+    <div class="vision-card">
+      <span class="vm-label">Visi</span>
+      <h2>MPK yang aktif, terbuka, dan berdaya.</h2>
+      <p>
+        Mengoptimalkan peran dan kinerja MPK SMAN 1 Batujaya sebagai wadah aspirasi siswa
+        yang aktif dan terbuka serta memperkuat fungsi pengawasan terhadap OSIS melalui
+        penyampaian kritik dan saran yang konstruktif.
+      </p>
+    </div>
+
+    <div class="mission-card">
+      <span class="vm-label">Misi</span>
+      <h2>Langkah untuk mewujudkan visi</h2>
+      <ol class="mission-list">
+        <li>Meningkatkan pengawasan MPK terhadap kinerja dan program kerja OSIS agar berjalan dengan baik, terarah, dan sesuai dengan tujuan organisasi.</li>
+        <li>Meningkatkan komunikasi dan keterbukaan MPK kepada OSIS, siswa, dan pihak sekolah dalam menyampaikan aspirasi serta menindaklanjuti hasil pengawasan.</li>
+        <li>Mendorong anggota MPK untuk menjalankan peran dan tugasnya secara konsisten, bertanggung jawab, serta berkontribusi dalam kegiatan organisasi.</li>
+        <li>Meningkatkan kemampuan anggota MPK dalam menyampaikan pendapat, aspirasi, kritik, dan saran secara aktif, jelas, santun, dan percaya diri.</li>
+        <li>Membangun budaya aspirasi yang terbuka, konstruktif, dan bertanggung jawab sehingga siswa memiliki ruang untuk menyampaikan ide, kritik, maupun saran.</li>
+        <li>Meningkatkan koordinasi dan dokumentasi hasil pengawasan serta aspirasi siswa agar dapat dikelola secara lebih terstruktur.</li>
+        <li>Mendorong evaluasi dan perbaikan berkelanjutan terhadap pelaksanaan program kerja organisasi melalui komunikasi dan pengawasan yang objektif.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="vm-note">
+    <b>Inti dari visi dan misi:</b> MPK hadir sebagai wadah perwakilan siswa yang aktif,
+    terbuka, dan bertanggung jawab—bukan hanya dalam menerima aspirasi, tetapi juga dalam
+    menjalankan fungsi pengawasan, komunikasi, dan evaluasi bersama OSIS serta pihak sekolah.
+  </div>
+</section>
+
+<!-- KANIRA -->
+<section id="kanira" class="view">
+  <div class="detail-hero pink">
+    <span class="accent"></span>
+    <div class="detail-content">
+      <button class="back" onclick="showView('home')">← Kembali ke Proker</button>
+      <div class="detail-icon">🗣️</div>
+      <h1>KANIRA</h1>
+      <p class="lead">MPK Berani Berbicara merupakan forum pengembangan kemampuan anggota MPK dalam berbicara, berdiskusi, dan menyampaikan pendapat secara jelas serta percaya diri.</p>
+      <div class="badges"><span class="badge">Public Speaking</span><span class="badge">Debat</span><span class="badge">Berpikir Kritis</span><span class="badge">Simulasi Aspirasi</span></div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="panel">
+      <h2>📌 Apa itu KANIRA?</h2>
+      <p>KANIRA adalah forum yang berfokus pada pengembangan kemampuan komunikasi dan penyampaian pendapat anggota MPK. Kegiatan diarahkan agar anggota terbiasa berbicara dengan jelas, berdiskusi, menyampaikan kritik dan saran, serta menyampaikan aspirasi dengan percaya diri dalam menjalankan tugas organisasi.</p>
+      <h3>Latar Belakang</h3>
+      <p>Dalam menjalankan fungsi organisasi, anggota MPK perlu mampu menyampaikan gagasan dan aspirasi secara terarah. Karena itu, KANIRA menjadi ruang latihan agar kemampuan berbicara, berdiskusi, berpikir kritis, dan menyampaikan pendapat dapat terus dikembangkan.</p>
+    </div>
+    <div class="panel">
+      <h2>🎯 Tujuan</h2>
+      <div class="goal-list">
+        <div class="goal"><span>01</span><div><b>Meningkatkan kepercayaan diri</b><span>Membiasakan anggota menyampaikan pendapat di depan orang lain.</span></div></div>
+        <div class="goal"><span>02</span><div><b>Melatih public speaking</b><span>Mengembangkan kemampuan berbicara secara jelas dan terstruktur.</span></div></div>
+        <div class="goal"><span>03</span><div><b>Membangun berpikir kritis</b><span>Melatih anggota memahami persoalan dan menyusun argumen.</span></div></div>
+        <div class="goal"><span>04</span><div><b>Melatih penyampaian aspirasi</b><span>Membiasakan kritik dan saran disampaikan secara baik.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="panel"><h2>🧩 Bentuk Kegiatan</h2><ul class="list"><li>Latihan public speaking</li><li>Diskusi dan forum pendapat</li><li>Latihan debat</li><li>Latihan berpikir kritis melalui studi kasus</li><li>Simulasi penyampaian kritik, saran, dan aspirasi</li></ul></div>
+    <div class="panel"><h2>🔄 Alur Pelaksanaan</h2><div class="number-list">
+      <div class="number-item"><div class="number">1</div><div><strong>Persiapan</strong>Menentukan tema dan bentuk latihan.</div></div>
+      <div class="number-item"><div class="number">2</div><div><strong>Pelaksanaan</strong>Peserta mengikuti materi, diskusi, dan simulasi.</div></div>
+      <div class="number-item"><div class="number">3</div><div><strong>Evaluasi</strong>Memberikan masukan terhadap penyampaian peserta.</div></div>
+    </div></div>
+  </div>
+
+  <div class="panel" style="margin-top:13px"><h2>📈 Hasil yang Diharapkan</h2><p>Anggota MPK memiliki keberanian dan kemampuan yang lebih baik dalam berbicara, berdiskusi, menyusun pendapat, serta menyampaikan kritik, saran, dan aspirasi secara jelas dan bertanggung jawab.</p></div>
+</section>
+
+<!-- NARASI -->
+<section id="narasi" class="view">
+  <div class="detail-hero yellow">
+    <span class="accent"></span>
+    <div class="detail-content">
+      <button class="back" onclick="showView('home')">← Kembali ke Proker</button>
+      <div class="detail-icon">📖</div>
+      <h1>NARASI</h1>
+      <p class="lead">Antar Organisasi merupakan kegiatan pertukaran wawasan antara MPK SMAN 1 Batujaya dengan MPK dari sekolah lain melalui diskusi dan berbagi pengalaman mengenai pelaksanaan organisasi.</p>
+      <div class="badges"><span class="badge">Sharing</span><span class="badge">Sistem Kerja</span><span class="badge">Program</span><span class="badge">Relasi</span></div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="panel">
+      <h2>📌 Apa itu NARASI?</h2>
+      <p>NARASI adalah wadah pertukaran wawasan antarorganisasi yang mempertemukan MPK SMAN 1 Batujaya dengan MPK dari sekolah lain. Melalui diskusi dan berbagi pengalaman, masing-masing organisasi dapat mengenal perbedaan sistem kerja, program, serta cara menjalankan fungsi MPK.</p>
+      <h3>Latar Belakang</h3>
+      <p>Setiap sekolah dapat memiliki sistem kerja dan pengalaman organisasi yang berbeda. Perbedaan tersebut dapat menjadi bahan pembelajaran untuk melihat berbagai cara menjalankan organisasi dan mengembangkan program kerja.</p>
+    </div>
+    <div class="panel">
+      <h2>🎯 Tujuan</h2>
+      <div class="goal-list">
+        <div class="goal"><span>01</span><div><b>Memperluas wawasan</b><span>Mengenal cara kerja MPK dari sekolah lain.</span></div></div>
+        <div class="goal"><span>02</span><div><b>Bertukar pengalaman</b><span>Berbagi pengalaman dalam menjalankan organisasi.</span></div></div>
+        <div class="goal"><span>03</span><div><b>Mencari inovasi</b><span>Menggali gagasan yang dapat menjadi inspirasi program.</span></div></div>
+        <div class="goal"><span>04</span><div><b>Membangun relasi</b><span>Membuka hubungan dan komunikasi antarorganisasi siswa.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="panel"><h2>🤝 Bentuk Kegiatan</h2><ul class="list"><li>Diskusi antar-MPK</li><li>Sharing pengalaman organisasi</li><li>Presentasi sistem kerja dan program</li><li>Tanya jawab antaranggota</li><li>Pertukaran ide dan inovasi</li></ul></div>
+    <div class="panel"><h2>🔄 Alur Pelaksanaan</h2><div class="number-list">
+      <div class="number-item"><div class="number">1</div><div><strong>Menentukan mitra</strong>Menentukan MPK sekolah yang akan diajak bertukar wawasan.</div></div>
+      <div class="number-item"><div class="number">2</div><div><strong>Menentukan tema</strong>Menyusun topik diskusi sesuai kebutuhan organisasi.</div></div>
+      <div class="number-item"><div class="number">3</div><div><strong>Forum pertukaran</strong>Melaksanakan diskusi, sharing, dan tanya jawab.</div></div>
+      <div class="number-item"><div class="number">4</div><div><strong>Evaluasi</strong>Merangkum wawasan yang dapat dipelajari.</div></div>
+    </div></div>
+  </div>
+
+  <div class="panel" style="margin-top:13px"><h2>📈 Hasil yang Diharapkan</h2><p>MPK memperoleh tambahan wawasan mengenai sistem kerja dan pengalaman organisasi lain yang dapat menjadi bahan pembelajaran, evaluasi, serta pengembangan program kerja.</p></div>
+</section>
+
+<!-- APK -->
+<section id="apk" class="view">
+  <div class="detail-hero green">
+    <span class="accent"></span>
+    <div class="detail-content">
+      <button class="back" onclick="showView('home')">← Kembali ke Proker</button>
+      <div class="detail-icon">⭐</div>
+      <h1>APREKA</h1>
+      <p class="lead">Apresiasi Anggota MPK merupakan kegiatan pemberian apresiasi kepada anggota MPK yang aktif mengikuti kumpulan dan berkontribusi dalam kegiatan organisasi.</p>
+      <div class="badges"><span class="badge">Keaktifan</span><span class="badge">Mading</span><span class="badge">Stiker Bintang</span><span class="badge">Piagam</span></div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="panel">
+      <h2>📌 Apa itu APREKA?</h2>
+      <p>APREKA merupakan program apresiasi yang memberikan penghargaan terhadap keaktifan anggota MPK dalam mengikuti kumpulan dan berkontribusi pada kegiatan organisasi. Keaktifan dicatat melalui mading keaktifan dan stiker bintang sebagai bentuk pencatatan partisipasi.</p>
+      <h3>Latar Belakang</h3>
+      <p>Kontribusi anggota dalam organisasi perlu mendapat perhatian dan apresiasi. Dengan adanya pencatatan keaktifan, partisipasi anggota dapat terlihat dan menjadi bagian dari evaluasi serta penghargaan pada akhir semester.</p>
+    </div>
+    <div class="panel">
+      <h2>🎯 Tujuan</h2>
+      <div class="goal-list">
+        <div class="goal"><span>01</span><div><b>Meningkatkan motivasi</b><span>Mendorong anggota untuk aktif dalam kegiatan organisasi.</span></div></div>
+        <div class="goal"><span>02</span><div><b>Menghargai kontribusi</b><span>Memberikan apresiasi atas partisipasi anggota.</span></div></div>
+        <div class="goal"><span>03</span><div><b>Mencatat keaktifan</b><span>Membuat partisipasi anggota terdokumentasi.</span></div></div>
+        <div class="goal"><span>04</span><div><b>Membangun budaya aktif</b><span>Mendorong keterlibatan dalam kegiatan MPK.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="panel"><h2>⭐ Sistem Apresiasi</h2><ul class="list"><li>Anggota memiliki bagian pada mading keaktifan.</li><li>Stiker bintang digunakan sebagai pencatatan keaktifan.</li><li>Perolehan bintang direkap selama periode yang ditentukan.</li><li>Pada akhir setiap semester, anggota dengan perolehan bintang terbanyak mendapatkan apresiasi berupa piagam.</li></ul></div>
+    <div class="panel"><h2>🔄 Alur Pelaksanaan</h2><div class="number-list">
+      <div class="number-item"><div class="number">1</div><div><strong>Catat keaktifan</strong>Keaktifan anggota dicatat pada sistem yang disediakan.</div></div>
+      <div class="number-item"><div class="number">2</div><div><strong>Tambahkan bintang</strong>Stiker bintang menjadi penanda partisipasi.</div></div>
+      <div class="number-item"><div class="number">3</div><div><strong>Rekap</strong>Perolehan bintang dihimpun secara berkala.</div></div>
+      <div class="number-item"><div class="number">4</div><div><strong>Apresiasi</strong>Piagam diberikan pada akhir semester sesuai hasil rekap.</div></div>
+    </div></div>
+  </div>
+
+  <div class="panel" style="margin-top:13px"><h2>📈 Hasil yang Diharapkan</h2><p>Terbangunnya budaya keaktifan dan partisipasi dalam MPK melalui sistem pencatatan dan apresiasi yang membuat kontribusi anggota lebih terlihat dan dihargai.</p></div>
+</section>
+
+<!-- RONAWICARA -->
+<section id="ronawicara" class="view">
+  <div class="detail-hero lav">
+    <span class="accent"></span>
+    <div class="detail-content">
+      <button class="back" onclick="showView('home')">← Kembali ke Proker</button>
+      <div class="detail-icon">💬</div>
+      <h1>RONAWICARA</h1>
+      <p class="lead">Ruang aspirasi siswa melalui sticky note pada mading yang disediakan, sekaligus melalui media online agar siswa dapat menyampaikan kritik, saran, dan aspirasi dengan lebih mudah.</p>
+      <div class="badges"><span class="badge">Aspirasi</span><span class="badge">Kritik</span><span class="badge">Saran</span><span class="badge">Online</span></div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="panel">
+      <h2>📌 Apa itu Ronawicara?</h2>
+      <p>Ronawicara merupakan wadah penyampaian aspirasi siswa melalui sticky note yang ditempelkan pada mading yang telah disediakan. Siswa dapat menyampaikan kritik, saran, maupun aspirasi secara langsung melalui media tersebut.</p>
+      <h3>Perluasan ke Media Digital</h3>
+      <p>Selain mading sekolah, Ronawicara dapat dimanfaatkan melalui website agar siswa memiliki alternatif untuk menyampaikan aspirasi secara online. Dengan begitu, penyampaian aspirasi tidak terbatas pada kehadiran siswa di depan mading.</p>
+    </div>
+    <div class="panel">
+      <h2>🎯 Tujuan</h2>
+      <div class="goal-list">
+        <div class="goal"><span>01</span><div><b>Menyediakan ruang aspirasi</b><span>Memberi kesempatan siswa menyampaikan suara, kritik, dan saran.</span></div></div>
+        <div class="goal"><span>02</span><div><b>Memudahkan akses</b><span>Menyediakan pilihan penyampaian langsung maupun melalui internet.</span></div></div>
+        <div class="goal"><span>03</span><div><b>Menghimpun aspirasi</b><span>Membantu MPK mengumpulkan aspirasi secara lebih terstruktur.</span></div></div>
+        <div class="goal"><span>04</span><div><b>Mendorong tindak lanjut</b><span>Aspirasi disampaikan kepada pihak terkait sesuai kewenangannya.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><div class="kicker">Dua jalur penyampaian</div><h2>Pilih cara yang paling mudah.</h2></div>
+  <div class="two">
+    <div class="mini"><h3>📌 Mading Sekolah</h3><p>Tulis aspirasi pada sticky note yang tersedia, lalu tempelkan pada mading Ronawicara yang telah disediakan di sekolah.</p></div>
+    <div class="mini"><h3>🌐 Website / Internet</h3><p>Tidak sempat ke mading? Aspirasi juga dapat dikirim secara online melalui website Ronawicara.</p></div>
+  </div>
+
+  <div class="panel" style="margin-top:13px">
+    <h2>🔄 Alur Penyampaian Aspirasi</h2>
+    <div class="timeline">
+      <div class="timeline-item"><b>01 · Sampaikan</b><span>Siswa menuliskan aspirasi di mading atau mengirimkannya melalui website.</span></div>
+      <div class="timeline-item"><b>02 · Kumpulkan</b><span>MPK menghimpun dan merekap aspirasi yang masuk.</span></div>
+      <div class="timeline-item"><b>03 · Tinjau</b><span>Aspirasi dipahami dan dikelompokkan sesuai pokok persoalannya.</span></div>
+      <div class="timeline-item"><b>04 · Sampaikan</b><span>MPK menyampaikan aspirasi kepada pihak terkait.</span></div>
+      <div class="timeline-item"><b>05 · Tindak Lanjut</b><span>Aspirasi ditindaklanjuti sesuai kewenangan dan kondisi yang berlaku.</span></div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <h2>💬 Punya aspirasi untuk sekolah?</h2>
+    <p>Jangan hanya disimpan atau dibicarakan. Sampaikan melalui Ronawicara. Kamu bisa menggunakan mading sekolah atau mengirim aspirasi melalui internet.</p>
+    <a class="btn" href="https://ronawicara.vercel.app/" target="_blank" rel="noopener">🌐 Kirim Aspirasi Online →</a>
+  </div>
+
+  <div class="ronawicara-box" style="margin-top:13px">
+    <h3>Catatan</h3>
+    <p>Aspirasi yang masuk akan dikumpulkan dan disampaikan kepada pihak terkait untuk ditindaklanjuti sesuai dengan kewenangan. Tindak lanjut tidak selalu berarti setiap usulan dapat langsung direalisasikan.</p>
+  </div>
+</section>
+
+<footer>© 2026 MPK SMAN 1 Batujaya · Ruang gagasan, suara, dan apresiasi anggota.</footer>
+</div>
+
+<script>
+function showView(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  const target=document.getElementById(id);
+  if(target) target.classList.add("active");
+  document.querySelectorAll(".navlinks button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function scrollToId(id){
+  document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+</script>
+<script>
+const bgMusic=document.getElementById('bgMusic');
+async function startBackgroundMusic(){if(!bgMusic)return;try{bgMusic.volume=0.65;await bgMusic.play();}catch(e){const resume=async()=>{try{bgMusic.volume=0.65;await bgMusic.play();}catch(_e){}};window.addEventListener('pointerdown',resume,{once:true});window.addEventListener('keydown',resume,{once:true});window.addEventListener('touchstart',resume,{once:true});}}
+window.addEventListener('load',startBackgroundMusic);
+</script>
+
+<style>
+  .floating-music {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid rgba(255,255,255,.75);
+    border-radius: 999px;
+    background: rgba(255,255,255,.88);
+    box-shadow: 0 10px 30px rgba(80,60,100,.18);
+    backdrop-filter: blur(12px);
+  }
+  .music-btn {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    background: #f1e7ff;
+    color: #5e4775;
+    transition: .2s ease;
+  }
+  .music-btn:hover { transform: scale(1.06); }
+  .music-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #5e4775;
+    padding: 0 8px 0 2px;
+    white-space: nowrap;
+  }
+</style>
+
+<div class="floating-music" aria-label="Kontrol musik">
+  <button class="music-btn" id="musicToggle" type="button" aria-label="Putar musik">🔇</button>
+  <span class="music-label" id="musicLabel">Musik mati</span>
+</div>
+
+<script>
+  const music = document.getElementById('bgMusic');
+  const musicToggle = document.getElementById('musicToggle');
+  const musicLabel = document.getElementById('musicLabel');
+
+  function updateMusicButton() {
+    if (!music) return;
+    if (music.paused) {
+      musicToggle.textContent = '🔇';
+      musicToggle.setAttribute('aria-label', 'Hidupkan musik');
+      musicLabel.textContent = 'Musik mati';
+    } else {
+      musicToggle.textContent = '🔊';
+      musicToggle.setAttribute('aria-label', 'Matikan musik');
+      musicLabel.textContent = 'Musik hidup';
+    }
+  }
+
+  musicToggle.addEventListener('click', async () => {
+    if (music.paused) {
+      try {
+        music.volume = 0.65;
+        await music.play();
+      } catch (e) {
+        console.log('Musik tidak dapat diputar:', e);
+      }
+    } else {
+      music.pause();
+    }
+    updateMusicButton();
+  });
+
+  music.addEventListener('play', updateMusicButton);
+  music.addEventListener('pause', updateMusicButton);
+  updateMusicButton();
+</script>
+
+</body>
+</html>
